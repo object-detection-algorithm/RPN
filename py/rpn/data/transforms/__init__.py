@@ -7,5 +7,7 @@
 @description:
 """
 
+from .compose import Compose
+
 from .build import build_transforms
 from .build import build_target_transform
