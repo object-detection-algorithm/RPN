@@ -95,7 +95,7 @@ def main():
     if cfg.OUTPUT_DIR:
         mkdir(cfg.OUTPUT_DIR)
 
-    logger = setup_logger("SSD", dist_util.get_rank(), cfg.OUTPUT_DIR)
+    logger = setup_logger("RPN", dist_util.get_rank(), cfg.OUTPUT_DIR)
     logger.info("Using {} GPUs".format(num_gpus))
     logger.info(args)
 

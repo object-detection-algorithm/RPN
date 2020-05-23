@@ -69,7 +69,7 @@ def main():
     cfg.merge_from_list(args.opts)
     cfg.freeze()
 
-    logger = setup_logger("SSD", dist_util.get_rank(), cfg.OUTPUT_DIR)
+    logger = setup_logger("RPN", dist_util.get_rank(), cfg.OUTPUT_DIR)
     logger.info("Using {} GPUs".format(num_gpus))
     logger.info(args)
 
