@@ -9,6 +9,8 @@
 
 from itertools import product
 import torch
+from rpn.utils import box_utils
+
 
 class AnchorBox(object):
 
@@ -46,7 +48,12 @@ class AnchorBox(object):
 
         anchors = torch.tensor(anchors)
         if self.clip:
-            anchors.clamp_(max=1, min=0)
+            anchors.clamp_(max=1.0, min=0.0)
+
+            corner_form_anchors = box_utils.center_form_to_corner_form(anchors)
+            corner_form_anchors.clamp_(max=1.0, min=0.0)
+
+            anchors = box_utils.corner_form_to_center_form(corner_form_anchors)
         return anchors
 
 

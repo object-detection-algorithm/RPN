@@ -24,8 +24,8 @@ class RPNTargetTransform:
         self.pos_threshold = pos_threshold
         self.neg_threshold = neg_threshold
         # 用于训练的正负样本
-        self.num_pos = num_cls * pos_neg_ratio
-        self.num_neg = num_cls - self.num_pos
+        self.num_pos = int(num_cls * pos_neg_ratio)
+        self.num_neg = int(num_cls - self.num_pos)
 
     def __call__(self, gt_boxes, gt_labels):
         if type(gt_boxes) is np.ndarray:
