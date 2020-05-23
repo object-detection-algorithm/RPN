@@ -8,7 +8,7 @@
 """
 
 from itertools import product
-
+import torch
 
 class AnchorBox(object):
 
