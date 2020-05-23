@@ -15,7 +15,7 @@ from rpn.utils.logger import setup_logger
 
 
 def evaluation(cfg, ckpt, distributed):
-    logger = logging.getLogger("SSD.inference")
+    logger = logging.getLogger("RPN.inference")
 
     model = build_detection_model(cfg)
     checkpointer = CheckPointer(model, save_dir=cfg.OUTPUT_DIR, logger=logger)
@@ -26,7 +26,7 @@ def evaluation(cfg, ckpt, distributed):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='SSD Evaluation on VOC and COCO dataset.')
+    parser = argparse.ArgumentParser(description='RPN Evaluation on VOC dataset.')
     parser.add_argument(
         "--config-file",
         default="",

@@ -20,7 +20,7 @@ def convert_locations_to_boxes(locations, priors, center_variance, size_variance
         $$exp(predicted\_hw * size_variance) = \frac {real\_hw} {prior\_hw}$$
     We do it in the inverse direction here.
     Args:
-        locations (batch_size, num_priors, 4): the regression output of SSD. It will contain the outputs as well.
+        locations (batch_size, num_priors, 4): the regression output. It will contain the outputs as well.
         priors (num_priors, 4) or (batch_size/1, num_priors, 4): prior boxes.
         center_variance: a float used to change the scale of center.
         size_variance: a float used to change of scale of size.
