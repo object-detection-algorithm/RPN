@@ -51,7 +51,7 @@ def compute_on_dataset(model, data_loader, device):
 
 def inference(model, data_loader, dataset_name, device, output_folder=None, use_cached=False, **kwargs):
     dataset = data_loader.dataset
-    logger = logging.getLogger("SSD.inference")
+    logger = logging.getLogger("RPN.inference")
     logger.info("Evaluating {} dataset({} images):".format(dataset_name, len(dataset)))
     predictions_path = os.path.join(output_folder, 'predictions.pth')
     if use_cached and os.path.exists(predictions_path):
