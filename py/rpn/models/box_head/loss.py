@@ -31,7 +31,7 @@ class MultiBoxLoss(nn.Module):
 
         confidence = confidence[mask, :]
         classification_loss = F.cross_entropy(confidence.view(-1, num_classes), labels[mask], reduction='sum')
-        num_pos_cls = sum(pos_mask)
+        num_pos_cls = confidence.size(0)
 
         pos_mask = labels > 0
         predicted_locations = predicted_locations[pos_mask, :].view(-1, 4)
