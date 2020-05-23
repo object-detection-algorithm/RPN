@@ -12,4 +12,4 @@ from rpn.models import registry
 from .vgg import VGG
 
 def build_backbone(cfg):
-    return registry.BACKBONES[cfg.MODEL.BACKBONE.NAME](cfg, cfg.MODEL.BACKBONE.PRETRAINED)
+    return registry.BACKBONES[cfg.MODEL.BACKBONE.NAME]()
