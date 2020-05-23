@@ -8,7 +8,6 @@
 """
 
 from .voc import VOCDataset
-from .coco import COCODataset
 
 from .build import build_dataset
 from .evaluation import evaluate
