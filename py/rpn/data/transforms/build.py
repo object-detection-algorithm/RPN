@@ -44,7 +44,7 @@ def build_target_transform(cfg):
     transform = RPNTargetTransform(AnchorBox(cfg)(),
                                    cfg.MODEL.CENTER_VARIANCE,
                                    cfg.MODEL.SIZE_VARIANCE,
-                                   cfg.MODEL.POS_THRESOHLD,
+                                   cfg.MODEL.POS_THRESHOLD,
                                    cfg.MODEL.NEG_THRESHOLD,
                                    cfg.MODEL.N_CLS,
                                    cfg.MODEL.POS_NEG_RATIO)
