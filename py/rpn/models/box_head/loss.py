@@ -25,14 +25,16 @@ class MultiBoxLoss(nn.Module):
             gt_locations (batch_size, num_anchors, 4): real boxes corresponding all the anchors.
         """
         num_classes = confidence.size(2)
+        # 用于计算分类损失的正负样本
         pos_mask = labels == 1
         neg_mask = labels == 0
         mask = pos_mask | neg_mask
 
-        confidence = confidence[mask, :]
-        classification_loss = F.cross_entropy(confidence.view(-1, num_classes), labels[mask], reduction='sum')
+        confidence = confidence[mask, :].view(-1, num_classes)
+        classification_loss = F.cross_entropy(confidence, labels[mask].view(-1), reduction='sum')
         num_pos_cls = confidence.size(0)
 
+        # 用于计算回归损失的正样本
         pos_mask = labels > 0
         predicted_locations = predicted_locations[pos_mask, :].view(-1, 4)
         gt_locations = gt_locations[pos_mask, :].view(-1, 4)

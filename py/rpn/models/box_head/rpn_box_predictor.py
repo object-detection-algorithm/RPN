@@ -19,8 +19,8 @@ class RPNBoxPredictor(nn.Module):
         super().__init__()
         self.cfg = cfg
 
-        self.conv = nn.Conv2d(cfg.MODEL.BOX_HEAD.FEATURE_MAP, cfg.MODEL.BOX_HEAD.CONV_OUTPUT, kernel_size=3, stride=1,
-                              padding=1)
+        self.conv = nn.Conv2d(cfg.MODEL.BOX_HEAD.FEATURE_MAP, cfg.MODEL.BOX_HEAD.CONV_OUTPUT,
+                              kernel_size=3, stride=1, padding=1)
         self.relu = nn.ReLU(inplace=True)
 
         self.cls_header = self.cls_block(cfg.MODEL.BOX_HEAD.CONV_OUTPUT, cfg.MODEL.ANCHORS.NUM, cfg.MODEL.NUM_CLASSES)
@@ -31,7 +31,7 @@ class RPNBoxPredictor(nn.Module):
     def reset_parameters(self):
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
-                nn.init.xavier_uniform_(m.weight)
+                nn.init.kaiming_normal_(m.weight)
                 nn.init.zeros_(m.bias)
 
     def forward(self, features):

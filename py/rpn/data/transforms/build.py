@@ -24,14 +24,14 @@ def build_transforms(cfg, is_train=True):
             # RandomSampleCrop(),
             # RandomMirror(),
             ToPercentCoords(),
-            Resize(cfg.INPUT.IMAGE_WIDTH, cfg.INPUT.IMAGE_HEIGHT),
+            Resize(cfg.INPUT.IMAGE_SHORT_SIDE),
             # SubtractMeans(cfg.INPUT.PIXEL_MEAN),
             ToTensor(),
             Normalize(cfg.INPUT.PIXEL_MEAN, cfg.INPUT.PIXEL_STD)
         ]
     else:
         transform = [
-            Resize(cfg.INPUT.IMAGE_WIDTH, cfg.INPUT.IMAGE_HEIGHT),
+            Resize(cfg.INPUT.IMAGE_SHORT_SIDE),
             # SubtractMeans(cfg.INPUT.PIXEL_MEAN),
             ToTensor(),
             Normalize(cfg.INPUT.PIXEL_MEAN, cfg.INPUT.PIXEL_STD)
@@ -41,11 +41,5 @@ def build_transforms(cfg, is_train=True):
 
 
 def build_target_transform(cfg):
-    transform = RPNTargetTransform(AnchorBox(cfg)(),
-                                   cfg.MODEL.CENTER_VARIANCE,
-                                   cfg.MODEL.SIZE_VARIANCE,
-                                   cfg.MODEL.POS_THRESHOLD,
-                                   cfg.MODEL.NEG_THRESHOLD,
-                                   cfg.MODEL.N_CLS,
-                                   cfg.MODEL.POS_NEG_RATIO)
+    transform = RPNTargetTransform(cfg)
     return transform

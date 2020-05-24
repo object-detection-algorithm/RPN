@@ -1,8 +1,7 @@
 MODEL:
   NUM_CLASSES: 2
 INPUT:
-  IMAGE_WIDTH: 800
-  IMAGE_HEIGHT: 600
+  IMAGE_SHORT_SIDE: 600
 DATASETS:
   TRAIN: ("voc_2007_trainval", "voc_2012_trainval")
   TEST: ("voc_2007_test", )
@@ -11,6 +10,6 @@ SOLVER:
   LR_STEPS: [60000, 80000]
   GAMMA: 0.1
   BATCH_SIZE: 1
-  LR: 1e-4
+  LR: 1e-3
 
 OUTPUT_DIR: 'outputs/vgg_voc0712'

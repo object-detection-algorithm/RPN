@@ -8,12 +8,7 @@ from rpn.structures.container import Container
 
 
 class VOCDataset(torch.utils.data.Dataset):
-    class_names = ('__background__',
-                   'aeroplane', 'bicycle', 'bird', 'boat',
-                   'bottle', 'bus', 'car', 'cat', 'chair',
-                   'cow', 'diningtable', 'dog', 'horse',
-                   'motorbike', 'person', 'pottedplant',
-                   'sheep', 'sofa', 'train', 'tvmonitor')
+    class_names = ('__background__', '__foreground__')
 
     def __init__(self, data_dir, split, transform=None, target_transform=None, keep_difficult=False):
         """Dataset for VOC datasets.
@@ -41,7 +36,7 @@ class VOCDataset(torch.utils.data.Dataset):
         if self.transform:
             image, boxes, labels = self.transform(image, boxes, labels)
         if self.target_transform:
-            boxes, labels = self.target_transform(boxes, labels)
+            boxes, labels = self.target_transform(image, boxes, labels)
         targets = Container(
             boxes=boxes,
             labels=labels,
@@ -78,7 +73,8 @@ class VOCDataset(torch.utils.data.Dataset):
             x2 = float(bbox.find('xmax').text) - 1
             y2 = float(bbox.find('ymax').text) - 1
             boxes.append([x1, y1, x2, y2])
-            labels.append(self.class_dict[class_name])
+            # 所有的GT标注均为前景，类别１
+            labels.append(1)
             is_difficult_str = obj.find('difficult').text
             is_difficult.append(int(is_difficult_str) if is_difficult_str else 0)
 

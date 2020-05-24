@@ -52,8 +52,7 @@ _C.MODEL.BOX_HEAD.CONV_OUTPUT = 512
 # -----------------------------------------------------------------------------
 _C.INPUT = CN()
 # Image size
-_C.INPUT.IMAGE_WIDTH = 800
-_C.INPUT.IMAGE_HEIGHT = 600
+_C.INPUT.IMAGE_SHORT_SIDE = 600
 # 如果使用了ImageNet预训练模型，使用以下归一化参数
 _C.INPUT.PIXEL_MEAN = (0.485, 0.456, 0.406)
 _C.INPUT.PIXEL_STD = (0.229, 0.224, 0.225)

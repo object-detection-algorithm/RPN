@@ -17,15 +17,15 @@ class AnchorBox(object):
     def __init__(self, cfg):
         anchor_config = cfg.MODEL.ANCHORS
 
-        self.feature_h = anchor_config.FEATURE_MAP_HEIGHT
-        self.feature_w = anchor_config.FEATURE_MAP_WIDTH
+        # self.feature_h = anchor_config.FEATURE_MAP_HEIGHT
+        # self.feature_w = anchor_config.FEATURE_MAP_WIDTH
 
         self.stride = anchor_config.STRIDE
         self.sizes = anchor_config.SIZES
         self.aspect_ratios = anchor_config.ASPECT_RATIOS
         self.clip = anchor_config.CLIP
 
-    def __call__(self):
+    def __call__(self, feature_h, feature_w):
         """Generate RPN Anchor Boxes.
             It returns the center, height and width of the anchors. The values are relative to the image size
             Returns:
@@ -34,17 +34,19 @@ class AnchorBox(object):
         """
         anchors = []
         # i表示第几行，j表示第几列
-        for i, j in product(range(self.feature_h), range(self.feature_w)):
+        for i, j in product(range(feature_h), range(feature_w)):
             # unit center x,y
-            cx = (j + 0.5) / self.feature_w
-            cy = (i + 0.5) / self.feature_h
+            cx = (j + 0.5) / feature_w
+            cy = (i + 0.5) / feature_h
 
             # [cx, cy, w, h]
             for size, ratio in product(self.sizes, self.aspect_ratios):
-                # 高是较短边
-                ratio_form_h = size / self.stride / self.feature_h
+                size_h = size
+                size_w = size_h * ratio
 
-                anchors.append([cx, cy, ratio_form_h * ratio, ratio_form_h])
+                ch = size / self.stride / feature_h
+                cw = size_w / self.stride / feature_w
+                anchors.append([cx, cy, cw, ch])
 
         anchors = torch.tensor(anchors)
         if self.clip:
@@ -62,5 +64,6 @@ if __name__ == '__main__':
     import torch
 
     model = AnchorBox(cfg)
-    anchors = model()
+    anchors = model(50, 37)
     print(anchors.shape)
+    print(anchors)

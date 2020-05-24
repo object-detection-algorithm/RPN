@@ -5,13 +5,12 @@ from rpn.utils.nms import batched_nms
 
 
 class PostProcessor:
+
     def __init__(self, cfg):
         super().__init__()
         self.cfg = cfg
-        self.width = cfg.INPUT.IMAGE_WIDTH
-        self.height = cfg.INPUT.IMAGE_HEIGHT
 
-    def __call__(self, detections):
+    def __call__(self, detections, image_h, image_w):
         batches_scores, batches_boxes = detections
         device = batches_scores.device
         batch_size = batches_scores.size(0)
@@ -42,8 +41,9 @@ class PostProcessor:
             # 获取超过置信度阈值的边界框及置信度和标签
             boxes, scores, labels = boxes[indices], scores[indices], labels[indices]
 
-            boxes[:, 0::2] *= self.width
-            boxes[:, 1::2] *= self.height
+            # 从分数形式转换为绝对值
+            boxes[:, 0::2] *= image_w
+            boxes[:, 1::2] *= image_h
 
             keep = batched_nms(boxes, scores, labels, self.cfg.TEST.NMS_THRESHOLD)
             # keep only topk scoring predictions
@@ -52,7 +52,7 @@ class PostProcessor:
             boxes, scores, labels = boxes[keep], scores[keep], labels[keep]
 
             container = Container(boxes=boxes, labels=labels, scores=scores)
-            container.img_width = self.width
-            container.img_height = self.height
+            container.img_width = image_w
+            container.img_height = image_h
             results.append(container)
         return results

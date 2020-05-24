@@ -126,17 +126,15 @@ def assign_anchors(gt_boxes, gt_labels, corner_form_anchors,
     # IoU小于neg_threshold的锚点框设置为背景类别
     labels[best_target_per_anchors < neg_threshold] = 0  # the backgournd id
 
-    # print('pos', sum(labels == 1))
     # 随机采样num_pos个正样本用于训练
     if sum(labels == 1) > num_pos:
         pos_indices = np.where(labels == 1)[0]
         disable_index = np.random.choice(pos_indices, size=(len(pos_indices) - num_pos), replace=False)
-        # 　不参与分类损失计算的正样本标签设置为２
+        # 不参与分类损失计算的正样本标签设置为２
         labels[disable_index] = 2
     else:
         num_neg += (num_pos - sum(labels == 1).item())
 
-    # print('neg', num_neg)
     # 随机采样num_neg个负样本用于训练
     neg_indices = np.where(labels == 0)[0]
     if sum(neg_indices) > num_neg:

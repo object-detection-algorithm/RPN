@@ -23,7 +23,10 @@ class RPNDetector(nn.Module):
 
     def forward(self, images, targets=None):
         features = self.backbone(images)
-        detections, detector_losses = self.box_head(features, targets)
+
+        image_h = images.shape[2]
+        image_w = images.shape[3]
+        detections, detector_losses = self.box_head(features, image_h, image_w, targets)
         if self.training:
             return detector_losses
         return detections
