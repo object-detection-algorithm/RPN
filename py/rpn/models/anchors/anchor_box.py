@@ -17,9 +17,6 @@ class AnchorBox(object):
     def __init__(self, cfg):
         anchor_config = cfg.MODEL.ANCHORS
 
-        # self.feature_h = anchor_config.FEATURE_MAP_HEIGHT
-        # self.feature_w = anchor_config.FEATURE_MAP_WIDTH
-
         self.stride = anchor_config.STRIDE
         self.sizes = anchor_config.SIZES
         self.aspect_ratios = anchor_config.ASPECT_RATIOS
