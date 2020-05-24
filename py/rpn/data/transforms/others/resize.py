@@ -15,10 +15,6 @@ class Resize(object):
     def __init__(self, short_side):
         self.short_side = short_side
 
-    # def __init__(self, width=800, height=600):
-    #     self.width = width
-    #     self.height = height
-
     def __call__(self, image, boxes=None, labels=None):
         h, w = image.shape[:2]
         if h > w:
@@ -27,4 +23,7 @@ class Resize(object):
             ratio = 1.0 * self.short_side / h
 
         image = cv2.resize(image, (0, 0), fx=ratio, fy=ratio)
+
+        # image = cv2.resize(image, (800, 600))
+
         return image, boxes, labels

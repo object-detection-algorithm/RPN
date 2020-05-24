@@ -7,7 +7,7 @@ from rpn.utils import box_utils
 
 class MultiBoxLoss(nn.Module):
 
-    def __init__(self, lam=10):
+    def __init__(self, lam=10.0):
         """Implement RPN MultiBox Loss.
 
         Basically, MultiBox loss combines classification loss and Smooth L1 regression loss.
