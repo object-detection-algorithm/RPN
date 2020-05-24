@@ -41,8 +41,8 @@ class AnchorBox(object):
 
             # [cx, cy, w, h]
             for size, ratio in product(self.sizes, self.aspect_ratios):
-                size_h = size
-                size_w = size_h * ratio
+                size_h = size * torch.sqrt(ratio)
+                size_w = size * torch.sqrt(1.0 / ratio)
 
                 ch = size / self.stride / feature_h
                 cw = size_w / self.stride / feature_w
