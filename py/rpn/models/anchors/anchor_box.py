@@ -48,7 +48,7 @@ class AnchorBox(object):
 
         anchors = torch.tensor(anchors)
         if self.clip:
-            anchors.clamp_(max=1.0, min=0.0)
+            # anchors.clamp_(max=1.0, min=0.0)
 
             corner_form_anchors = box_utils.center_form_to_corner_form(anchors)
             corner_form_anchors.clamp_(max=1.0, min=0.0)
