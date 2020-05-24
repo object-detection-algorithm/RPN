@@ -19,10 +19,10 @@ def build_transforms(cfg, is_train=True):
     if is_train:
         transform = [
             ConvertFromInts(),
-            # PhotometricDistort(),
+            PhotometricDistort(),
             # Expand(cfg.INPUT.PIXEL_MEAN),
             # RandomSampleCrop(),
-            # RandomMirror(),
+            RandomMirror(),
             ToPercentCoords(),
             Resize(cfg.INPUT.IMAGE_SHORT_SIDE),
             # SubtractMeans(cfg.INPUT.PIXEL_MEAN),
