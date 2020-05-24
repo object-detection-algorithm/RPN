@@ -42,4 +42,4 @@ class MultiBoxLoss(nn.Module):
         num_pos_reg = gt_locations.size(0)
 
         # 分类损失和回归损失之前还有一个超参数lambda
-        return smooth_l1_loss / num_pos_reg * self.lam, classification_loss / num_pos_cls
+        return smooth_l1_loss / num_pos_reg, classification_loss / num_pos_cls * self.lam
