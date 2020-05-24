@@ -26,9 +26,14 @@ class RPNTargetTransform:
         self.num_pos = int(cfg.MODEL.N_CLS * cfg.MODEL.POS_NEG_RATIO)
         self.num_neg = int(cfg.MODEL.N_CLS - self.num_pos)
 
+        # 步长
+        self.stride = cfg.MODEL.ANCHORS.STRIDE
+
     def __call__(self, image, gt_boxes, gt_labels):
-        h, w = image.shape[:2]
-        center_form_anchors = self.anchor_model(h, w)
+        h, w = image.shape[1], image.shape[2]
+        feature_h = int(h / self.stride)
+        feature_w = int(w / self.stride)
+        center_form_anchors = self.anchor_model(feature_h, feature_w)
         corner_form_anchors = box_utils.center_form_to_corner_form(center_form_anchors)
 
         if type(gt_boxes) is np.ndarray:
