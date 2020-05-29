@@ -92,8 +92,8 @@ _C.SOLVER.WARMUP_ITERS = 500
 # ---------------------------------------------------------------------------- #
 _C.TEST = CN()
 _C.TEST.NMS_THRESHOLD = 0.7
-_C.TEST.CONFIDENCE_THRESHOLD = 0.7
-_C.TEST.MAX_PER_IMAGE = 100
+_C.TEST.CONFIDENCE_THRESHOLD = 0.01
+_C.TEST.MAX_PER_IMAGE = 300
 _C.TEST.BATCH_SIZE = 1
 
 _C.OUTPUT_DIR = 'outputs'
